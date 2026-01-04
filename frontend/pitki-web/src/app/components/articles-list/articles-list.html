@@ -28,6 +28,7 @@
       </select>
 
       <button (click)="clearFilters()" class="clear-btn">Clear Filters</button>
+      <button (click)="removeAll()" class="remove-all-btn" *ngIf="articles.length > 0">Remove All</button>
     </div>
 
     <div class="filter-row" *ngIf="selectedDateRange === 'custom'">

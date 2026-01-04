@@ -45,35 +45,6 @@ CREATE TRIGGER update_articles_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
--- Enable Row Level Security (RLS) for multi-user support
-ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
-ALTER TABLE articles ENABLE ROW LEVEL SECURITY;
-
--- RLS Policies: Users can only access their own data
-CREATE POLICY "Users can view their own categories"
-    ON categories FOR SELECT
-    USING (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can insert their own categories"
-    ON categories FOR INSERT
-    WITH CHECK (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can delete their own categories"
-    ON categories FOR DELETE
-    USING (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can view their own articles"
-    ON articles FOR SELECT
-    USING (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can insert their own articles"
-    ON articles FOR INSERT
-    WITH CHECK (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can update their own articles"
-    ON articles FOR UPDATE
-    USING (user_id = current_setting('app.current_user_id', TRUE));
-
-CREATE POLICY "Users can delete their own articles"
-    ON articles FOR DELETE
-    USING (user_id = current_setting('app.current_user_id', TRUE));
+-- Disable Row Level Security (simpler approach - data isolated by user_id in application)
+ALTER TABLE categories DISABLE ROW LEVEL SECURITY;
+ALTER TABLE articles DISABLE ROW LEVEL SECURITY;

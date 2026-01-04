@@ -25,6 +25,8 @@ export async function handleMessage(ctx) {
   const messageText = ctx.message.text;
   const url = extractUrl(messageText);
 
+  console.log(`📨 Received message from user ${userId}: ${messageText}`);
+
   let articleData = {
     userId,
     url: url || null,
@@ -69,6 +71,12 @@ export async function handleMessage(ctx) {
     callback_data: `category_${cat.id}`
   }]);
 
+  // Add Cancel button at the end
+  keyboard.push([{
+    text: '❌ Cancel',
+    callback_data: 'cancel'
+  }]);
+
   // Send message with category selection
   const sentMessage = await ctx.reply(
     `📝 Article: ${articleData.title}\n📍 Source: ${articleData.source}\n\nSelect a category:`,
@@ -110,7 +118,8 @@ export async function handleMessage(ctx) {
 export async function handleCategorySelection(ctx) {
   const userId = ctx.from.id.toString();
   const callbackData = ctx.callbackQuery.data;
-  const categoryId = callbackData.replace('category_', '');
+
+  console.log(`✅ User ${userId} callback: ${callbackData}`);
 
   // Find the pending article
   let articleData = null;
@@ -128,6 +137,16 @@ export async function handleCategorySelection(ctx) {
     await ctx.answerCbQuery('Article already saved or expired.');
     return;
   }
+
+  // Handle cancel
+  if (callbackData === 'cancel') {
+    pendingArticles.delete(articleId);
+    await ctx.answerCbQuery();
+    await ctx.editMessageText('❌ Cancelled. Article not saved.');
+    return;
+  }
+
+  const categoryId = callbackData.replace('category_', '');
 
   // Remove from pending
   pendingArticles.delete(articleId);
@@ -159,6 +178,8 @@ export async function handleCategorySelection(ctx) {
  * @param {string} categoryId
  */
 async function saveArticle(articleData, categoryId) {
+  console.log(`💾 Saving article: ${articleData.title} to category ${categoryId}`);
+
   const { error } = await supabase
     .from('articles')
     .insert({
@@ -172,7 +193,9 @@ async function saveArticle(articleData, categoryId) {
     });
 
   if (error) {
-    console.error('Error saving article:', error);
+    console.error('❌ Error saving article:', error);
     throw error;
   }
+
+  console.log('✅ Article saved successfully');
 }

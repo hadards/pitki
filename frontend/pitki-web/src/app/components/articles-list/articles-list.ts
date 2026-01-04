@@ -176,4 +176,24 @@ export class ArticlesList implements OnInit {
     this.customToDate = '';
     this.loadArticles();
   }
+
+  removeAll(): void {
+    if (!confirm(`Are you sure you want to delete ALL ${this.articles.length} articles? This cannot be undone!`)) {
+      return;
+    }
+
+    const deletePromises = this.articles.map(article =>
+      this.api.deleteArticle(article.id).toPromise()
+    );
+
+    Promise.all(deletePromises)
+      .then(() => {
+        this.loadArticles();
+      })
+      .catch((err) => {
+        console.error('Error deleting articles:', err);
+        alert('Failed to delete some articles');
+        this.loadArticles();
+      });
+  }
 }

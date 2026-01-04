@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Category {
   id: string;
@@ -33,8 +34,8 @@ export interface Stats {
   providedIn: 'root',
 })
 export class Api {
-  private apiUrl = 'http://localhost:3000/api';
-  private userId = 'demo-user'; // TODO: Replace with actual user ID from Telegram Web App
+  private apiUrl = environment.apiUrl;
+  private userId = environment.userId;
 
   constructor(private http: HttpClient) {}
 

@@ -1,14 +1,14 @@
 .articles-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
 }
 
 .filter-bar {
-  background: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 16px;
   margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .filter-row {
@@ -23,10 +23,18 @@
 }
 
 .search-input, .filter-select {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 12px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
   font-size: 14px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.search-input:focus, .filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .search-input {
@@ -36,19 +44,36 @@
 
 .filter-select {
   min-width: 150px;
-}
-
-.clear-btn {
-  padding: 10px 20px;
-  background: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
+.clear-btn, .remove-all-btn {
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.clear-btn {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
 .clear-btn:hover {
-  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.remove-all-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+.remove-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
 }
 
 .error-message {
@@ -78,19 +103,21 @@
 
 .article-card {
   background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border: none;
+  border-radius: 16px;
   overflow: hidden;
-  transition: box-shadow 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .article-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
 }
 
 .article-content {
   cursor: pointer;
-  padding: 15px;
+  padding: 20px;
 }
 
 .article-with-thumbnail {
@@ -99,11 +126,12 @@
 }
 
 .thumbnail {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 12px;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .article-info {
@@ -130,20 +158,22 @@
 }
 
 .badge {
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .source-badge {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
 
 .category-badge {
-  background: #f3e5f5;
-  color: #7b1fa2;
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  border: 1px solid #667eea;
 }
 
 .date {
@@ -153,16 +183,19 @@
 
 .delete-btn {
   width: 100%;
-  padding: 10px;
-  background: #dc3545;
+  padding: 12px;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
   color: white;
   border: none;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
-  background: #c82333;
+  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
 }
 
 @media (max-width: 768px) {
