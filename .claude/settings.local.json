@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(brainstorming)",
+      "Bash(mkdir:*)",
+      "Bash(ng version:*)",
+      "Bash(ng new:*)",
+      "Bash(ng generate:*)"
+    ]
+  }
+}

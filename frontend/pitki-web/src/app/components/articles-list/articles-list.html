@@ -1,0 +1,79 @@
+<div class="articles-container">
+  <div class="filter-bar">
+    <div class="filter-row">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search articles..."
+        class="search-input"
+      />
+
+      <select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()" class="filter-select">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+      </select>
+
+      <select [(ngModel)]="selectedSource" (ngModelChange)="onFilterChange()" class="filter-select">
+        <option value="">All Sources</option>
+        <option *ngFor="let source of sources" [value]="source">{{source}}</option>
+      </select>
+
+      <select [(ngModel)]="selectedDateRange" (ngModelChange)="onFilterChange()" class="filter-select">
+        <option value="all">All Time</option>
+        <option value="today">Today</option>
+        <option value="week">This Week</option>
+        <option value="month">This Month</option>
+        <option value="custom">Custom Range</option>
+      </select>
+
+      <button (click)="clearFilters()" class="clear-btn">Clear Filters</button>
+    </div>
+
+    <div class="filter-row" *ngIf="selectedDateRange === 'custom'">
+      <label>From: <input type="date" [(ngModel)]="customFromDate" (ngModelChange)="onFilterChange()" /></label>
+      <label>To: <input type="date" [(ngModel)]="customToDate" (ngModelChange)="onFilterChange()" /></label>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    {{error}}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Loading articles...
+  </div>
+
+  <div class="articles-grid" *ngIf="!loading && !error">
+    <div class="empty-state" *ngIf="articles.length === 0">
+      <p>No articles found. Try adjusting your filters or save some articles via Telegram!</p>
+    </div>
+
+    <div class="article-card" *ngFor="let article of articles">
+      <div class="article-content" (click)="openArticle(article.url)">
+        <div class="article-with-thumbnail" *ngIf="article.thumbnail_url">
+          <img [src]="article.thumbnail_url" [alt]="article.title" class="thumbnail" />
+          <div class="article-info">
+            <h3 class="article-title">{{article.title}}</h3>
+            <div class="article-meta">
+              <span class="badge source-badge">{{article.source}}</span>
+              <span class="badge category-badge">{{article.categories?.name || 'Uncategorized'}}</span>
+              <span class="date">{{getTimeAgo(article.created_at)}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-without-thumbnail" *ngIf="!article.thumbnail_url">
+          <h3 class="article-title">{{article.title}}</h3>
+          <div class="article-meta">
+            <span class="badge source-badge">{{article.source}}</span>
+            <span class="badge category-badge">{{article.categories?.name || 'Uncategorized'}}</span>
+            <span class="date">{{getTimeAgo(article.created_at)}}</span>
+          </div>
+        </div>
+      </div>
+
+      <button (click)="deleteArticle(article)" class="delete-btn">Delete</button>
+    </div>
+  </div>
+</div>

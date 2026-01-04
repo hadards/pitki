@@ -1,0 +1,76 @@
+<div class="settings-container">
+  <h2>Settings</h2>
+
+  <div class="section">
+    <h3>Manage Categories</h3>
+
+    <div class="error-message" *ngIf="error">
+      {{error}}
+    </div>
+
+    <div class="add-category">
+      <input
+        type="text"
+        [(ngModel)]="newCategoryName"
+        (keyup.enter)="addCategory()"
+        placeholder="Enter new category name"
+        class="category-input"
+      />
+      <button (click)="addCategory()" [disabled]="loading || !newCategoryName.trim()" class="add-btn">
+        Add Category
+      </button>
+    </div>
+
+    <div class="categories-list">
+      <div class="category-item" *ngFor="let category of categories">
+        <span class="category-name">{{category.name}}</span>
+        <button (click)="deleteCategory(category)" class="delete-btn">Delete</button>
+      </div>
+
+      <div class="empty-state" *ngIf="categories.length === 0">
+        No categories yet. Use /start in your Telegram bot to create default categories.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Statistics</h3>
+
+    <div class="stats-grid" *ngIf="stats">
+      <div class="stat-card">
+        <div class="stat-value">{{stats.total_articles}}</div>
+        <div class="stat-label">Total Articles</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Articles by Category</div>
+        <div class="stat-list">
+          <div class="stat-item" *ngFor="let item of stats.by_category">
+            <span>{{item.category}}</span>
+            <span class="stat-count">{{item.count}}</span>
+          </div>
+          <div class="empty-state" *ngIf="stats.by_category.length === 0">
+            No articles saved yet
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Articles by Source</div>
+        <div class="stat-list">
+          <div class="stat-item" *ngFor="let item of stats.by_source">
+            <span>{{item.source}}</span>
+            <span class="stat-count">{{item.count}}</span>
+          </div>
+          <div class="empty-state" *ngIf="stats.by_source.length === 0">
+            No articles saved yet
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading" *ngIf="!stats">
+      Loading statistics...
+    </div>
+  </div>
+</div>
