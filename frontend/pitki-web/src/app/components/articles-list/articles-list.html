@@ -1,12 +1,12 @@
-<div class="articles-container">
-  <div class="filter-bar">
-    <div class="filter-row">
+<div class="container">
+  <div class="filter-card">
+    <div class="filter-grid">
       <input
         type="text"
         [(ngModel)]="searchQuery"
         (ngModelChange)="onSearchChange()"
         placeholder="Search articles..."
-        class="search-input"
+        class="filter-input"
       />
 
       <select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()" class="filter-select">
@@ -27,54 +27,55 @@
         <option value="custom">Custom Range</option>
       </select>
 
-      <button (click)="clearFilters()" class="clear-btn">Clear Filters</button>
-      <button (click)="removeAll()" class="remove-all-btn" *ngIf="articles.length > 0">Remove All</button>
+      <div class="button-group">
+        <button (click)="clearFilters()" class="btn btn-clear">Clear</button>
+        <button (click)="removeAll()" *ngIf="articles.length > 0" class="btn btn-remove-all">Remove All</button>
+      </div>
     </div>
 
-    <div class="filter-row" *ngIf="selectedDateRange === 'custom'">
-      <label>From: <input type="date" [(ngModel)]="customFromDate" (ngModelChange)="onFilterChange()" /></label>
-      <label>To: <input type="date" [(ngModel)]="customToDate" (ngModelChange)="onFilterChange()" /></label>
+    <div class="date-filters" *ngIf="selectedDateRange === 'custom'">
+      <div class="date-filter-group">
+        <label class="date-filter-label">From</label>
+        <input type="date" [(ngModel)]="customFromDate" (ngModelChange)="onFilterChange()" class="filter-input" />
+      </div>
+      <div class="date-filter-group">
+        <label class="date-filter-label">To</label>
+        <input type="date" [(ngModel)]="customToDate" (ngModelChange)="onFilterChange()" class="filter-input" />
+      </div>
     </div>
   </div>
 
-  <div class="error-message" *ngIf="error">
-    {{error}}
+  <div *ngIf="error" class="error-alert">{{error}}</div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading articles...</p>
   </div>
 
-  <div class="loading" *ngIf="loading">
-    Loading articles...
-  </div>
-
-  <div class="articles-grid" *ngIf="!loading && !error">
-    <div class="empty-state" *ngIf="articles.length === 0">
-      <p>No articles found. Try adjusting your filters or save some articles via Telegram!</p>
+  <div *ngIf="!loading && !error" class="articles">
+    <div *ngIf="articles.length === 0" class="empty-state">
+      No articles found. Try adjusting your filters or save some articles via Telegram!
     </div>
 
-    <div class="article-card" *ngFor="let article of articles">
-      <div class="article-content" (click)="openArticle(article.url)">
-        <div class="article-with-thumbnail" *ngIf="article.thumbnail_url">
-          <img [src]="article.thumbnail_url" [alt]="article.title" class="thumbnail" />
+    <div *ngFor="let article of articles" class="article-card">
+      <div (click)="openArticle(article.url)" class="article-content">
+        <div class="article-body">
+          <img *ngIf="article.thumbnail_url" [src]="article.thumbnail_url" [alt]="article.title" class="article-thumbnail" />
+
           <div class="article-info">
             <h3 class="article-title">{{article.title}}</h3>
             <div class="article-meta">
-              <span class="badge source-badge">{{article.source}}</span>
-              <span class="badge category-badge">{{article.categories?.name || 'Uncategorized'}}</span>
-              <span class="date">{{getTimeAgo(article.created_at)}}</span>
+              <span class="badge badge-source">{{article.source}}</span>
+              <span class="badge badge-category">{{article.categories?.name || 'Uncategorized'}}</span>
+              <span class="article-date">{{getTimeAgo(article.created_at)}}</span>
             </div>
-          </div>
-        </div>
-
-        <div class="article-without-thumbnail" *ngIf="!article.thumbnail_url">
-          <h3 class="article-title">{{article.title}}</h3>
-          <div class="article-meta">
-            <span class="badge source-badge">{{article.source}}</span>
-            <span class="badge category-badge">{{article.categories?.name || 'Uncategorized'}}</span>
-            <span class="date">{{getTimeAgo(article.created_at)}}</span>
           </div>
         </div>
       </div>
 
-      <button (click)="deleteArticle(article)" class="delete-btn">Delete</button>
+      <div class="article-footer">
+        <button (click)="deleteArticle(article)" class="btn-delete">Delete</button>
+      </div>
     </div>
   </div>
 </div>

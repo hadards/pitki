@@ -5,7 +5,15 @@
       "Bash(mkdir:*)",
       "Bash(ng version:*)",
       "Bash(ng new:*)",
-      "Bash(ng generate:*)"
+      "Bash(ng generate:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss init)",
+      "Bash(npx --yes tailwindcss init)",
+      "Bash(cat:*)",
+      "Bash(npm start)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)"
     ]
   }
 }

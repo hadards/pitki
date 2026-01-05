@@ -1,76 +1,78 @@
-<div class="settings-container">
-  <h2>Settings</h2>
+<div class="container">
+  <div class="card">
+    <h2 class="card-title">Manage Categories</h2>
 
-  <div class="section">
-    <h3>Manage Categories</h3>
-
-    <div class="error-message" *ngIf="error">
+    <div *ngIf="error" class="error-alert">
       {{error}}
     </div>
 
-    <div class="add-category">
+    <div class="input-group">
       <input
         type="text"
         [(ngModel)]="newCategoryName"
         (keyup.enter)="addCategory()"
         placeholder="Enter new category name"
-        class="category-input"
+        class="input"
       />
-      <button (click)="addCategory()" [disabled]="loading || !newCategoryName.trim()" class="add-btn">
+      <button (click)="addCategory()" [disabled]="loading || !newCategoryName.trim()"
+              class="btn-primary">
         Add Category
       </button>
     </div>
 
-    <div class="categories-list">
-      <div class="category-item" *ngFor="let category of categories">
+    <div class="category-list">
+      <div *ngFor="let category of categories" class="category-item">
         <span class="category-name">{{category.name}}</span>
-        <button (click)="deleteCategory(category)" class="delete-btn">Delete</button>
+        <button (click)="deleteCategory(category)" class="btn-delete">
+          Delete
+        </button>
       </div>
 
-      <div class="empty-state" *ngIf="categories.length === 0">
+      <div *ngIf="categories.length === 0" class="empty-state">
         No categories yet. Use /start in your Telegram bot to create default categories.
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <h3>Statistics</h3>
+  <div class="card">
+    <h2 class="card-title">Statistics</h2>
 
-    <div class="stats-grid" *ngIf="stats">
+    <div *ngIf="stats" class="stats-grid">
       <div class="stat-card">
         <div class="stat-value">{{stats.total_articles}}</div>
         <div class="stat-label">Total Articles</div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-label">Articles by Category</div>
+      <div class="stat-card-secondary">
+        <div class="stat-card-title">Articles by Category</div>
         <div class="stat-list">
-          <div class="stat-item" *ngFor="let item of stats.by_category">
-            <span>{{item.category}}</span>
-            <span class="stat-count">{{item.count}}</span>
+          <div *ngFor="let item of stats.by_category" class="stat-item">
+            <span class="stat-item-label">{{item.category}}</span>
+            <span class="stat-item-value">{{item.count}}</span>
           </div>
-          <div class="empty-state" *ngIf="stats.by_category.length === 0">
+          <div *ngIf="stats.by_category.length === 0" class="stat-empty">
             No articles saved yet
           </div>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-label">Articles by Source</div>
+      <div class="stat-card-secondary">
+        <div class="stat-card-title">Articles by Source</div>
         <div class="stat-list">
-          <div class="stat-item" *ngFor="let item of stats.by_source">
-            <span>{{item.source}}</span>
-            <span class="stat-count">{{item.count}}</span>
+          <div *ngFor="let item of stats.by_source" class="stat-item">
+            <span class="stat-item-label">{{item.source}}</span>
+            <span class="stat-item-value">{{item.count}}</span>
           </div>
-          <div class="empty-state" *ngIf="stats.by_source.length === 0">
+          <div *ngIf="stats.by_source.length === 0" class="stat-empty">
             No articles saved yet
           </div>
         </div>
       </div>
     </div>
 
-    <div class="loading" *ngIf="!stats">
-      Loading statistics...
+    <div *ngIf="!stats" class="loading">
+      <div class="spinner"></div>
+      <p class="loading-text">Loading statistics...</p>
     </div>
   </div>
 </div>

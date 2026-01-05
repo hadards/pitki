@@ -7,7 +7,7 @@ export const articlesRouter = express.Router();
 articlesRouter.get('/', async (req, res) => {
   const userId = req.headers['x-user-id'];
 
-  console.log(`📖 GET /api/articles - User: ${userId}, Filters:`, req.query);
+  console.log(`[API] GET /api/articles - User: ${userId}, Filters:`, req.query);
 
   if (!userId) {
     return res.status(401).json({ error: 'User ID required in headers' });

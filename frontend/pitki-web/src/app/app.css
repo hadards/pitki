@@ -1,84 +1,70 @@
 .app-container {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background: #f8fafc;
 }
 
 .app-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 20px 40px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  height: 64px;
 }
 
-.app-header h1 {
-  margin: 0;
-  font-size: 32px;
+.app-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1e293b;
+  margin: 0;
 }
 
-nav {
+.nav {
   display: flex;
-  gap: 15px;
+  gap: 1rem;
 }
 
-nav a {
+.nav a {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: #475569;
   text-decoration: none;
-  color: #555;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  background: transparent;
-  border: 2px solid transparent;
+  transition: all 0.2s;
 }
 
-nav a:hover {
-  background: rgba(102, 126, 234, 0.1);
-  border-color: #667eea;
-  color: #667eea;
-  transform: translateY(-2px);
+.nav a:hover {
+  background: #f1f5f9;
 }
 
-nav a.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.nav a.active {
+  background: #4f46e5;
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.app-content {
-  flex: 1;
-  padding: 30px;
-  max-width: 1400px;
-  width: 100%;
+.main-content {
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 2rem 1.5rem;
 }
 
 @media (max-width: 768px) {
-  .app-header {
+  .header-content {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
   }
 
-  .app-header h1 {
-    font-size: 24px;
-  }
-
-  nav {
+  .nav {
     width: 100%;
     justify-content: center;
-  }
-
-  .app-content {
-    padding: 20px;
   }
 }

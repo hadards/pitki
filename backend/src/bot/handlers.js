@@ -25,7 +25,7 @@ export async function handleMessage(ctx) {
   const messageText = ctx.message.text;
   const url = extractUrl(messageText);
 
-  console.log(`📨 Received message from user ${userId}: ${messageText}`);
+  console.log(`[BOT] Received message from user ${userId}: ${messageText}`);
 
   let articleData = {
     userId,
@@ -79,7 +79,7 @@ export async function handleMessage(ctx) {
 
   // Send message with category selection
   const sentMessage = await ctx.reply(
-    `📝 Article: ${articleData.title}\n📍 Source: ${articleData.source}\n\nSelect a category:`,
+    `Article: ${articleData.title}\nSource: ${articleData.source}\n\nSelect a category:`,
     {
       reply_markup: {
         inline_keyboard: keyboard
@@ -105,7 +105,7 @@ export async function handleMessage(ctx) {
         await saveArticle(data, uncategorized.id);
         await ctx.telegram.sendMessage(
           userId,
-          '⏱️ No category selected. Saved to "Uncategorized"'
+          'Timeout: No category selected. Saved to "Uncategorized"'
         );
       }
     }
@@ -119,7 +119,7 @@ export async function handleCategorySelection(ctx) {
   const userId = ctx.from.id.toString();
   const callbackData = ctx.callbackQuery.data;
 
-  console.log(`✅ User ${userId} callback: ${callbackData}`);
+  console.log(`[BOT] User ${userId} callback: ${callbackData}`);
 
   // Find the pending article
   let articleData = null;
@@ -142,7 +142,7 @@ export async function handleCategorySelection(ctx) {
   if (callbackData === 'cancel') {
     pendingArticles.delete(articleId);
     await ctx.answerCbQuery();
-    await ctx.editMessageText('❌ Cancelled. Article not saved.');
+    await ctx.editMessageText('Cancelled. Article not saved.');
     return;
   }
 
@@ -164,7 +164,7 @@ export async function handleCategorySelection(ctx) {
 
     await ctx.answerCbQuery();
     await ctx.editMessageText(
-      `✅ Saved to "${category.name}"!\n\n📝 ${articleData.title}\n📍 ${articleData.source}`
+      `Saved to "${category.name}"\n\nTitle: ${articleData.title}\nSource: ${articleData.source}`
     );
   } catch (error) {
     console.error('Error saving article:', error);
@@ -178,7 +178,7 @@ export async function handleCategorySelection(ctx) {
  * @param {string} categoryId
  */
 async function saveArticle(articleData, categoryId) {
-  console.log(`💾 Saving article: ${articleData.title} to category ${categoryId}`);
+  console.log(`[DB] Saving article: ${articleData.title} to category ${categoryId}`);
 
   const { error } = await supabase
     .from('articles')
@@ -193,9 +193,9 @@ async function saveArticle(articleData, categoryId) {
     });
 
   if (error) {
-    console.error('❌ Error saving article:', error);
+    console.error('[DB] Error saving article:', error);
     throw error;
   }
 
-  console.log('✅ Article saved successfully');
+  console.log('[DB] Article saved successfully');
 }

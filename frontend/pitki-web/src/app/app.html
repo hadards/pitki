@@ -1,13 +1,15 @@
 <div class="app-container">
   <header class="app-header">
-    <h1>{{title}}</h1>
-    <nav>
-      <a routerLink="/articles" routerLinkActive="active">Articles</a>
-      <a routerLink="/settings" routerLinkActive="active">Settings</a>
-    </nav>
+    <div class="header-content">
+      <h1 class="app-title">{{title}}</h1>
+      <nav class="nav">
+        <a routerLink="/articles" routerLinkActive="active">Articles</a>
+        <a routerLink="/settings" routerLinkActive="active">Settings</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="app-content">
+  <main class="main-content">
     <router-outlet />
   </main>
 </div>

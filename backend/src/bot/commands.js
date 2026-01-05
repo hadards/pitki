@@ -79,10 +79,10 @@ export async function handleStart(ctx) {
     await createDefaultCategories(userId);
 
     await ctx.reply(
-      '👋 Welcome to Pitki!\n\n' +
+      'Welcome to Pitki!\n\n' +
       'I help you collect and organize articles from around the web.\n\n' +
-      '📌 Just send me a link, and I\'ll help you categorize it.\n' +
-      '⏱️ You have 60 seconds to pick a category, or I\'ll save it to "Uncategorized".\n\n' +
+      'Just send me a link, and I\'ll help you categorize it.\n' +
+      'You have 60 seconds to pick a category, or I\'ll save it to "Uncategorized".\n\n' +
       'Commands:\n' +
       '/addcategory <name> - Add a new category\n' +
       '/categories - List all your categories\n' +
@@ -108,9 +108,9 @@ export async function handleAddCategory(ctx) {
 
   try {
     await addCategory(userId, categoryName);
-    await ctx.reply(`✅ Category "${categoryName}" added!`);
+    await ctx.reply(`Category "${categoryName}" added successfully`);
   } catch (error) {
-    await ctx.reply(`❌ Error: ${error.message}`);
+    await ctx.reply(`Error: ${error.message}`);
   }
 }
 
@@ -128,10 +128,10 @@ export async function handleCategories(ctx) {
       return;
     }
 
-    const categoryList = categories.map(cat => `• ${cat.name}`).join('\n');
-    await ctx.reply(`📁 Your categories:\n\n${categoryList}`);
+    const categoryList = categories.map(cat => `- ${cat.name}`).join('\n');
+    await ctx.reply(`Your categories:\n\n${categoryList}`);
   } catch (error) {
-    await ctx.reply('❌ Error fetching categories.');
+    await ctx.reply('Error fetching categories.');
   }
 }
 
@@ -140,7 +140,7 @@ export async function handleCategories(ctx) {
  */
 export async function handleHelp(ctx) {
   await ctx.reply(
-    '🤖 Pitki - Article Collection Bot\n\n' +
+    'Pitki - Article Collection Bot\n\n' +
     'Send me any link, and I\'ll help you organize it!\n\n' +
     'Commands:\n' +
     '/start - Initialize your account\n' +
