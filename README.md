@@ -336,4 +336,5 @@ MIT
 - [Angular](https://angular.io/) for frontend
 - [Supabase](https://supabase.com/) for database
 - [Render](https://render.com/) for free hosting
+- [cron-job.org](https://cron-job.org/) for keep-alive service (prevents cold starts)
 - [open-graph-scraper](https://github.com/jshemas/openGraphScraper) for metadata extraction
