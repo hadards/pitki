@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "build": "cd ../frontend/pitki-web && npm install && npm run build"
+    "build": "cd ../frontend/pitki-web && npm install --include=dev && npm run build"
   },
   "keywords": ["telegram", "bot", "article", "collection"],
   "author": "",
